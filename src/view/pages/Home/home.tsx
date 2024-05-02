@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import viteLogo from "/vite.svg";
 
 export function Home() {
@@ -12,12 +11,7 @@ export function Home() {
 			<h1>Vite + React</h1>
 			<div className="flex flex-col items-center">
 				{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-				<button
-					className="uppercase font-bold"
-					onClick={() => toast.success("Click")}
-				>
-					toast
-				</button>
+				<button className="uppercase font-bold">toast</button>
 				<p>
 					Edit <code>src/App.tsx</code> and save to test HMR
 				</p>

@@ -22,17 +22,11 @@
 
 		/* Aliases */
 		"baseUrl": ".",
+
 		"paths": {
-			"@/config/*": ["./src/app/config/*"],
-			"@/pages/*": ["./src/view/pages/*"],
-			"@/components/*": ["./src/view/components/*"],
-			"@/ui/*": ["./src/view/ui/*"],
-			"@/contexts/*": ["./src/app/contexts/*"],
-			"@/hooks/*": ["./src/app/hooks/*"],
-			"@/libs/*": ["./src/app/libs/*"],
-			"@/services/*": ["./src/app/services/*"],
-			"@/utils/*": ["./src/app/utils/*"],
-			"@/storage/*": ["./src/app/storage/*"]
+      "@/*": [
+        "./src/*"
+      ]
 		},
 
 		/* Testing */

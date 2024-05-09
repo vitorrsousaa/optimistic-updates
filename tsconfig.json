@@ -24,9 +24,11 @@
 		"baseUrl": ".",
 
 		"paths": {
-      "@/*": [
-        "./src/*"
-      ]
+			"@/contexts/*": ["./src/app/contexts/*"],
+			"@/config/*": ["./src/app/config/*"],
+			"@/utils/*": ["./src/app/utils/*"],
+			"@/components/*": ["./src/view/components/*"],
+			"@/ui/*": ["./src/view/ui/*"]
 		},
 
 		/* Testing */

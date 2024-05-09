@@ -1,7 +1,7 @@
+import { ThemeProvider } from "@/contexts/theme-provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Browser } from "./router/browser";
-import { ThemeProvider } from "@/app/contexts/theme-provider";
 
 const queryClient = new QueryClient({
 	defaultOptions: {

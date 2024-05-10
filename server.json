@@ -1,25 +1,18 @@
 {
-  "users": [
-    {
-      "id": "1234",
-      "name": "John Doe",
-      "username": "johndoe",
-      "image": "https://github.com/shadcn.png",
-      "blocked": false
-    },
-    {
-      "id": "123",
-      "name": "John Smith",
-      "username": "johnsmith",
-      "image": "https://github.com/shadcn.png",
-      "blocked": true
-    },
-    {
-      "id": "221f",
-      "name": "vitoir",
-      "username": "asdasd",
-      "blocked": false,
-      "image": "https://i.pravatar.cc/300"
-    }
-  ]
+	"users": [
+		{
+			"id": "1234",
+			"name": "John Doe",
+			"username": "johndoe",
+			"image": "https://i.pravatar.cc/300",
+			"blocked": true
+		},
+		{
+			"id": "123",
+			"name": "John Smith",
+			"username": "johnsmith",
+			"image": "https://github.com/shadcn.png",
+			"blocked": true
+		}
+	]
 }

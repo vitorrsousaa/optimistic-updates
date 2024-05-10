@@ -1,13 +1,23 @@
+import { CREATE_USER_MUTATION_KEY } from "@/hooks/useCreateUser";
 import { useUpdateUser } from "@/hooks/useUpdateUser";
 import { useUsers } from "@/hooks/useUsers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
 import { Skeleton } from "@/ui/skeleton";
 import { Switch } from "@/ui/switch";
+import { useMutationState } from "@tanstack/react-query";
 
 export function UsersList() {
 	const { users, isLoading } = useUsers();
 
 	const { updateUser } = useUpdateUser();
+
+	const pendingMutations = useMutationState({
+		filters: {
+			status: "pending",
+			mutationKey: CREATE_USER_MUTATION_KEY,
+		},
+		select: (mutate) => mutate.state.variables,
+	});
 
 	async function handleBlockedChange(checked: boolean, id: string) {
 		await updateUser({ blocked: checked, id });

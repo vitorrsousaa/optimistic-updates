@@ -25,10 +25,12 @@
 
 		"paths": {
 			"@/contexts/*": ["./src/app/contexts/*"],
+			"@/hooks/*": ["./src/app/hooks/*"],
 			"@/config/*": ["./src/app/config/*"],
 			"@/utils/*": ["./src/app/utils/*"],
 			"@/components/*": ["./src/view/components/*"],
-			"@/ui/*": ["./src/view/ui/*"]
+			"@/ui/*": ["./src/view/ui/*"],
+			"@/libs/*": ["./src/app/libs/*"]
 		},
 
 		/* Testing */

@@ -1,19 +1,9 @@
 import { ThemeProvider } from "@/contexts/theme-provider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/libs/query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Browser } from "./router/browser";
-
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			staleTime: Number.POSITIVE_INFINITY, // Always stale
-			refetchInterval: 1000 * 60 * 45, // 45 minutes
-			retry: false,
-			refetchOnWindowFocus: false,
-			gcTime: 1000 * 60 * 60 * 1, // 1 hours
-		},
-	},
-});
+import { Toaster } from "./ui/sonner";
 
 function App() {
 	return (
@@ -21,6 +11,8 @@ function App() {
 			<QueryClientProvider client={queryClient}>
 				<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 					<Browser />
+
+					<Toaster />
 				</ThemeProvider>
 				<ReactQueryDevtools />
 			</QueryClientProvider>

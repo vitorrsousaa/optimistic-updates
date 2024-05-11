@@ -8,17 +8,17 @@ export function UserForm() {
 	const [name, setName] = useState("");
 	const [username, setUsername] = useState("");
 
-	const { createUser, isLoading } = useCreateUser();
+	const { createUser } = useCreateUser();
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		try {
-			await createUser({ name, username, blocked: false });
-			toast.success("Usuário criado com sucesso");
-
 			setName("");
 			setUsername("");
+
+			await createUser({ name, username, blocked: false });
+			toast.success("Usuário criado com sucesso");
 		} catch (e) {
 			console.error(e);
 			toast.error("Erro ao criar usuário");
@@ -33,17 +33,15 @@ export function UserForm() {
 					placeholder="Name"
 					value={name}
 					onChange={(event) => setName(event.target.value)}
-					disabled={isLoading}
 				/>
 				<Input
 					type="text"
 					placeholder="Username"
 					value={username}
 					onChange={(event) => setUsername(event.target.value)}
-					disabled={isLoading}
 				/>
 			</div>
-			<Button type="submit" className="mt-2 w-full" disabled={isLoading}>
+			<Button type="submit" className="mt-2 w-full">
 				Cadastrar
 			</Button>
 		</form>

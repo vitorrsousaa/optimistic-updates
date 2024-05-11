@@ -1,19 +1,44 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createUsers } from "../services/createUser";
-import { USE_QUERY_KEY_USERS } from "./useUsers";
-
-export const CREATE_USER_MUTATION_KEY = ["users"];
+import { USE_QUERY_KEY_USERS, type UsersQueryData } from "./useUsers";
 
 export function useCreateUser() {
 	const queryClient = useQueryClient();
 
 	const { mutateAsync, isPending } = useMutation({
-		mutationKey: [CREATE_USER_MUTATION_KEY],
 		mutationFn: createUsers,
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: [USE_QUERY_KEY_USERS],
-			});
+		onMutate: (variables) => {
+			console.log("onmutate", variables);
+
+			const tempId = Math.random().toString(36).substr(2, 9);
+			queryClient.setQueryData<UsersQueryData>(USE_QUERY_KEY_USERS, (old) =>
+				old?.concat({
+					...variables,
+					id: tempId,
+					image: "https://github.com/shadcn.png",
+					status: "pending",
+				}),
+			);
+
+			return { tempId };
+		},
+		onSuccess: async (data, _, context) => {
+			await queryClient.invalidateQueries({ queryKey: USE_QUERY_KEY_USERS });
+
+			queryClient.setQueryData<UsersQueryData>(USE_QUERY_KEY_USERS, (old) =>
+				old?.map((user) => (user.id === context.tempId ? data : user)),
+			);
+		},
+
+		// Rollback
+		onError: async (_error, _, context) => {
+			await queryClient.invalidateQueries({ queryKey: USE_QUERY_KEY_USERS });
+
+			queryClient.setQueryData<UsersQueryData>(USE_QUERY_KEY_USERS, (old) =>
+				old?.map((user) =>
+					user.id === context?.tempId ? { ...user, status: "error" } : user,
+				),
+			);
 		},
 	});
 

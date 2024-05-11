@@ -1,26 +1,22 @@
-import { CREATE_USER_MUTATION_KEY } from "@/hooks/useCreateUser";
 import { useUpdateUser } from "@/hooks/useUpdateUser";
 import { useUsers } from "@/hooks/useUsers";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
 import { Skeleton } from "@/ui/skeleton";
 import { Switch } from "@/ui/switch";
-import { useMutationState } from "@tanstack/react-query";
+import { cn } from "@/utils/cn";
+import { toast } from "sonner";
 
 export function UsersList() {
 	const { users, isLoading } = useUsers();
 
 	const { updateUser } = useUpdateUser();
 
-	const pendingMutations = useMutationState({
-		filters: {
-			status: "pending",
-			mutationKey: CREATE_USER_MUTATION_KEY,
-		},
-		select: (mutate) => mutate.state.variables,
-	});
-
 	async function handleBlockedChange(checked: boolean, id: string) {
-		await updateUser({ blocked: checked, id });
+		try {
+			await updateUser({ blocked: checked, id });
+		} catch {
+			toast.error("Erro ao atualizar usuário");
+		}
 	}
 
 	return (
@@ -36,7 +32,11 @@ export function UsersList() {
 			{users.map((user) => (
 				<div
 					key={user.id}
-					className="border p-4 rounded-md flex items-center justify-between"
+					className={cn(
+						"border p-4 rounded-md flex items-center justify-between",
+						user.status === "pending" && "opacity-50",
+						user.status === "error" && "border-destructive bg-destructive/10",
+					)}
 				>
 					<div className="flex items-center gap-4">
 						<Avatar>
@@ -53,8 +53,9 @@ export function UsersList() {
 					</div>
 
 					<Switch
-						// checked={user.blocked}
+						checked={user.blocked}
 						onCheckedChange={(blocked) => handleBlockedChange(blocked, user.id)}
+						disabled={user.status === "pending" || user.status === "error"}
 					/>
 				</div>
 			))}

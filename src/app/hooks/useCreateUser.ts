@@ -23,7 +23,7 @@ export function useCreateUser() {
 			return { tempId };
 		},
 		onSuccess: async (data, _, context) => {
-			await queryClient.invalidateQueries({ queryKey: USE_QUERY_KEY_USERS });
+			await queryClient.cancelQueries({ queryKey: USE_QUERY_KEY_USERS });
 
 			queryClient.setQueryData<UsersQueryData>(USE_QUERY_KEY_USERS, (old) =>
 				old?.map((user) => (user.id === context.tempId ? data : user)),
@@ -32,7 +32,7 @@ export function useCreateUser() {
 
 		// Rollback
 		onError: async (_error, _, context) => {
-			await queryClient.invalidateQueries({ queryKey: USE_QUERY_KEY_USERS });
+			await queryClient.cancelQueries({ queryKey: USE_QUERY_KEY_USERS });
 
 			queryClient.setQueryData<UsersQueryData>(USE_QUERY_KEY_USERS, (old) =>
 				old?.map((user) =>
